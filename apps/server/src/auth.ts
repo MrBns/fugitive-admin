@@ -1,10 +1,8 @@
 import { betterAuth } from "better-auth";
-import Database from "better-sqlite3";
+import { Database } from "bun:sqlite";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const authDb = new Database(path.join(__dirname, "../data.db"));
+const authDb = new Database(path.join(import.meta.dir, "../../data.db"));
 
 export const auth = betterAuth({
   database: authDb,

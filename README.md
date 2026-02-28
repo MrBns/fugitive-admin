@@ -2,6 +2,18 @@
 
 A complete admin panel for rich blog posting built with React, Vite, TypeScript, Hono, and SQLite.
 
+## Monorepo Structure
+
+This project uses [Turborepo](https://turbo.build) with [Bun](https://bun.sh) as the package manager and runtime.
+
+```
+├── apps/
+│   ├── client/   – React 19 + Vite frontend
+│   └── server/   – Hono API server (Bun runtime)
+├── package.json  – Workspace root
+└── turbo.json    – Turborepo pipeline config
+```
+
 ## Features
 
 - **Authentication** – Sign up / sign in with email & password (powered by Better Auth)
@@ -17,16 +29,20 @@ A complete admin panel for rich blog posting built with React, Vite, TypeScript,
 | Frontend | React 19 + Vite + TypeScript |
 | Styling | Tailwind CSS v4 + Shadcn/ui |
 | Editor | Tiptap |
-| Backend | Hono on Node.js |
+| Backend | Hono on Bun |
 | Auth | Better Auth |
-| Database | SQLite via better-sqlite3 |
+| Database | SQLite via bun:sqlite |
 | Forms | React Hook Form + Zod |
+| Monorepo | Turborepo |
+| Runtime | Bun |
 
 ## Getting Started
 
+Requires [Bun](https://bun.sh) >= 1.3.
+
 ```bash
-npm install
-npm run dev
+bun install
+bun dev
 ```
 
 The app runs at http://localhost:5173 (client) and http://localhost:3001 (API).
@@ -35,8 +51,17 @@ The app runs at http://localhost:5173 (client) and http://localhost:3001 (API).
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start client + server concurrently |
-| `npm run dev:client` | Vite dev server only |
-| `npm run dev:server` | Hono API server only |
-| `npm run build` | Production build |
-| `npm run preview` | Preview production build |
+| `bun dev` | Start client + server via Turborepo |
+| `bun build` | Production build for all apps |
+| `bun lint` | Lint all apps |
+| `bun preview` | Preview production builds |
+
+### Per-workspace scripts
+
+```bash
+# Client only
+cd apps/client && bun dev
+
+# Server only
+cd apps/server && bun dev
+```
