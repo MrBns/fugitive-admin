@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { auth } from "./infrastructure/auth/index.js";
+import { auth } from "./infra/auth/index.js";
 import postsHandler from "./modules/posts/handler.js";
 
 const app = new Hono();
