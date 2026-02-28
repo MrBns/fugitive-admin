@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 import path from "path";
 
-const dbPath = path.join(import.meta.dir, "../../../../data.db");
+const dbPath = process.env.DATABASE_PATH ?? path.join(import.meta.dir, "../../../../data.db");
 
 export const db = new Database(dbPath);
 

@@ -43,7 +43,7 @@ export class PostRepository implements PostRepositoryPort {
     );
 
     const post = this.findById(id);
-    if (!post) throw new Error(`Failed to retrieve post after insert: ${id}`);
+    if (!post) throw new Error(`Failed to retrieve post after insert (id=${id}). This may indicate a database constraint violation.`);
     return post;
   }
 

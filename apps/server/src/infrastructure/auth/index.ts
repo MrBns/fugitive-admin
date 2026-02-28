@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { Database } from "bun:sqlite";
 import path from "path";
 
-const authDb = new Database(path.join(import.meta.dir, "../../../../data.db"));
+const authDb = new Database(process.env.DATABASE_PATH ?? path.join(import.meta.dir, "../../../../data.db"));
 
 export const auth = betterAuth({
   database: authDb,
