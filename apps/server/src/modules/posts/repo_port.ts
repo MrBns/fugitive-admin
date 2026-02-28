@@ -1,4 +1,4 @@
-import type { Post, CreatePostInput, UpdatePostInput } from "./post.entity.js";
+import type { Post, CreatePostInput, UpdatePostInput } from "./entity.js";
 
 export interface PostRepositoryPort {
   findAll(): Post[];

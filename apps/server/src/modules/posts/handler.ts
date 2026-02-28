@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import * as v from "valibot";
-import { auth } from "../../infra/auth/index.js";
-import { PostRepository } from "../../infra/repositories/post.repository.js";
-import { PostService } from "../../core/posts/post.service.js";
+import { auth } from "../../lib/auth/index.js";
+import { PostRepository } from "./repo.js";
+import { PostService } from "./services.js";
 import { CreatePostSchema, UpdatePostSchema } from "./validation.js";
 
 const repo = new PostRepository();

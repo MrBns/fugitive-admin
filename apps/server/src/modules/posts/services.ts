@@ -1,5 +1,5 @@
-import type { Post, CreatePostInput, UpdatePostInput } from "./post.entity.js";
-import type { PostRepositoryPort } from "./post.repository.port.js";
+import type { Post, CreatePostInput, UpdatePostInput } from "./entity.js";
+import type { PostRepositoryPort } from "./repo_port.js";
 
 export class PostService {
   constructor(private readonly repo: PostRepositoryPort) {}

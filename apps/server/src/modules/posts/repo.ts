@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import type { Post, CreatePostInput, UpdatePostInput } from "../../core/posts/post.entity.js";
-import type { PostRepositoryPort } from "../../core/posts/post.repository.port.js";
-import { db } from "../db/index.js";
+import type { Post, CreatePostInput, UpdatePostInput } from "./entity.js";
+import type { PostRepositoryPort } from "./repo_port.js";
+import { db } from "../../lib/db/index.js";
 
 function slugify(text: string): string {
   return text
