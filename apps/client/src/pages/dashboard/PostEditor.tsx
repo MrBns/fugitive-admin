@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import * as v from "valibot";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,14 +15,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const schema = z.object({
-  title: z.string().min(1, "Title is required"),
-  excerpt: z.string().optional(),
-  cover_image: z.string().optional(),
-  status: z.enum(["draft", "published"]),
+const schema = v.object({
+  title: v.pipe(v.string(), v.minLength(1, "Title is required")),
+  excerpt: v.optional(v.string()),
+  cover_image: v.optional(v.string()),
+  status: v.picklist(["draft", "published"]),
 });
 
-type FormData = z.infer<typeof schema>;
+type FormData = v.InferOutput<typeof schema>;
 
 export function PostEditor() {
   const { id } = useParams<{ id: string }>();
@@ -41,8 +41,8 @@ export function PostEditor() {
     reset,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: { status: "draft" },
+    resolver: valibotResolver(schema),
+    defaultValues: { status: "draft" as const },
   });
 
   const status = watch("status");
