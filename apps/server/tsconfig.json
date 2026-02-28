@@ -10,10 +10,7 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "types": [
-      "@types/bun"
-    ]
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*"
