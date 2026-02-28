@@ -1,0 +1,21 @@
+{
+  "name": "@fugitive-admin/server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "start": "bun dist/index.js",
+    "lint": "echo \"No linter configured for server\""
+  },
+  "dependencies": {
+    "better-auth": "^1.4.20",
+    "dotenv": "^17.3.1",
+    "hono": "^4.12.3"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "typescript": "~5.9.3"
+  }
+}

@@ -1,4 +1,3 @@
-import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { auth } from "./auth.js";
@@ -26,6 +25,7 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => {
 // Blog post routes
 app.route("/api/posts", posts);
 
-serve({ fetch: app.fetch, port: 3001 }, (info) => {
-  console.log(`Server running at http://localhost:${info.port}`);
-});
+export default {
+  port: 3001,
+  fetch: app.fetch,
+};
