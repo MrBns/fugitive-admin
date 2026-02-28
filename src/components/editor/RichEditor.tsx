@@ -75,7 +75,7 @@ function ToolbarButton({ onClick, isActive, tooltip, children, disabled }: Toolb
 export function RichEditor({ content, onChange, placeholder }: RichEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ link: false, underline: false }),
       Underline,
       Highlight,
       Image,
