@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import * as v from "valibot";
 import { signUp } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,23 +10,30 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Loader2 } from "lucide-react";
 
-const schema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+const schema = v.pipe(
+  v.object({
+    name: v.pipe(v.string(), v.minLength(2, "Name must be at least 2 characters")),
+    email: v.pipe(v.string(), v.email("Invalid email address")),
+    password: v.pipe(v.string(), v.minLength(8, "Password must be at least 8 characters")),
+    confirmPassword: v.string(),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["password"], ["confirmPassword"]],
+      (input) => input.password === input.confirmPassword,
+      "Passwords don't match"
+    ),
+    ["confirmPassword"]
+  )
+);
 
-type FormData = z.infer<typeof schema>;
+type FormData = v.InferOutput<typeof schema>;
 
 export function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: valibotResolver(schema),
   });
 
   const onSubmit = async (data: FormData) => {

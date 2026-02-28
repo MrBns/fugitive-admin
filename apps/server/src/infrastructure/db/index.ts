@@ -1,11 +1,10 @@
 import { Database } from "bun:sqlite";
 import path from "path";
 
-const dbPath = path.join(import.meta.dir, "../../data.db");
+const dbPath = path.join(import.meta.dir, "../../../../data.db");
 
 export const db = new Database(dbPath);
 
-// Initialize posts table
 db.exec(`
   CREATE TABLE IF NOT EXISTS posts (
     id TEXT PRIMARY KEY,

@@ -16,16 +16,40 @@ import {
   PlusCircle,
   LogOut,
   Settings,
-  BookOpen,
+  Layers,
+  Zap,
+  ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { Separator } from "@/components/ui/separator";
 
-const navItems = [
-  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/dashboard/posts", icon: FileText, label: "All Posts" },
-  { href: "/dashboard/posts/new", icon: PlusCircle, label: "New Post" },
+const navGroups = [
+  {
+    label: "Overview",
+    items: [
+      { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard", exact: true },
+    ],
+  },
+  {
+    label: "Blog",
+    items: [
+      { href: "/dashboard/posts", icon: FileText, label: "All Posts", exact: false },
+      { href: "/dashboard/posts/new", icon: PlusCircle, label: "New Post", exact: true },
+    ],
+  },
+  {
+    label: "NFT",
+    items: [
+      { href: "/dashboard/nft", icon: Layers, label: "NFT Management", exact: false },
+    ],
+  },
+  {
+    label: "DApp",
+    items: [
+      { href: "/dashboard/dapp", icon: Zap, label: "DApp Features", exact: false },
+    ],
+  },
 ];
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
@@ -45,65 +69,78 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     .toUpperCase()
     .slice(0, 2) ?? "A";
 
+  const isActive = (href: string, exact: boolean) => {
+    if (exact) return location.pathname === href;
+    return location.pathname.startsWith(href);
+  };
+
   return (
     <div className="flex h-screen bg-background">
       {/* Sidebar */}
-      <aside className="w-64 border-r flex flex-col">
-        <div className="p-6">
+      <aside className="w-56 border-r flex flex-col shrink-0">
+        <div className="px-4 py-4">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-primary" />
-            <span className="font-bold text-xl">Fugitive Admin</span>
+            <div className="h-6 w-6 rounded bg-primary flex items-center justify-center">
+              <ChevronRight className="h-3.5 w-3.5 text-primary-foreground" />
+            </div>
+            <span className="font-semibold text-sm">Fugitive Admin</span>
           </div>
         </div>
         <Separator />
         <ScrollArea className="flex-1">
-          <nav className="p-4 space-y-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                to={item.href}
-                className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  location.pathname === item.href
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </Link>
+          <nav className="p-3 space-y-4">
+            {navGroups.map((group) => (
+              <div key={group.label}>
+                <p className="px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70 mb-1">
+                  {group.label}
+                </p>
+                <div className="space-y-0.5">
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        "flex items-center gap-2.5 rounded-md px-2 py-1.5 text-xs font-medium transition-colors",
+                        isActive(item.href, item.exact)
+                          ? "bg-primary text-primary-foreground"
+                          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                      )}
+                    >
+                      <item.icon className="h-3.5 w-3.5 shrink-0" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </ScrollArea>
         <Separator />
-        <div className="p-4">
+        <div className="p-3">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-full justify-start gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+              <Button variant="ghost" size="sm" className="w-full justify-start gap-2 h-8 px-2">
+                <Avatar className="h-5 w-5">
+                  <AvatarFallback className="text-[10px]">{initials}</AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-sm font-medium truncate max-w-[140px]">
+                <div className="flex flex-col items-start text-left min-w-0">
+                  <span className="text-xs font-medium truncate max-w-[110px]">
                     {session?.user?.name}
-                  </span>
-                  <span className="text-xs text-muted-foreground truncate max-w-[140px]">
-                    {session?.user?.email}
                   </span>
                 </div>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem className="text-xs">
+                <Settings className="mr-2 h-3.5 w-3.5" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                className="text-destructive"
+                className="text-xs text-destructive"
                 onClick={handleSignOut}
               >
-                <LogOut className="mr-2 h-4 w-4" />
+                <LogOut className="mr-2 h-3.5 w-3.5" />
                 Sign out
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -118,3 +155,4 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+

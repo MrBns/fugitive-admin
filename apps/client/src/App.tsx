@@ -5,6 +5,8 @@ import { SignUp } from "@/pages/auth/SignUp";
 import { Dashboard } from "@/pages/dashboard/Dashboard";
 import { PostsList } from "@/pages/dashboard/PostsList";
 import { PostEditor } from "@/pages/dashboard/PostEditor";
+import { NftManagement } from "@/pages/dashboard/nft/NftManagement";
+import { DappFeatures } from "@/pages/dashboard/dapp/DappFeatures";
 import { ReactNode } from "react";
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
@@ -61,6 +63,22 @@ function App() {
           element={
             <ProtectedRoute>
               <PostEditor />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/nft"
+          element={
+            <ProtectedRoute>
+              <NftManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/dapp"
+          element={
+            <ProtectedRoute>
+              <DappFeatures />
             </ProtectedRoute>
           }
         />

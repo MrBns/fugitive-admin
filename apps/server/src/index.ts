@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { auth } from "./auth.js";
-import posts from "./routes/posts.js";
+import { auth } from "./infrastructure/auth/index.js";
+import postsHandler from "./modules/posts/handler.js";
 
 const app = new Hono();
 
@@ -23,7 +23,7 @@ app.on(["POST", "GET"], "/api/auth/*", (c) => {
 });
 
 // Blog post routes
-app.route("/api/posts", posts);
+app.route("/api/posts", postsHandler);
 
 export default {
   port: 3001,
