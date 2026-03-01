@@ -1,9 +1,11 @@
 {
   "name": "fugitive-admin",
   "private": true,
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "turbo dev --ui tui",
     "build": "turbo build",
     "lint": "turbo lint",
     "preview": "turbo preview"

@@ -124,7 +124,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                   <AvatarFallback className="text-[10px]">{initials}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col items-start text-left min-w-0">
-                  <span className="text-xs font-medium truncate max-w-[110px]">
+                  <span className="text-xs font-medium truncate max-w-27.5">
                     {session?.user?.name}
                   </span>
                 </div>
